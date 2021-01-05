@@ -2,53 +2,105 @@ package com.anton.sring.spring_boot.models;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table (name="users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
-
+@Table(name = "users")
+@Transactional
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column (name="name")
-    private String name;
-
-    @Column (name = "username")
-    private String username;
-
-    @Column (name= "password")
-    private String password;
-
-    @Column (name = "email")
-    private String email;
+    @Column(name = "user_id")
+    private long id;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "JM_roles", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<com.anton.sring.spring_boot.models.Role> roleSet;
+
+    @Column(name = "firstname", nullable = false)
+    private String name;
+
+    @Column(name = "lastname", nullable = false)
+    private String lastname;
+
+    @Column(name = "age")
+    private String age;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String login;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    public User(Set<com.anton.sring.spring_boot.models.Role> roleSet, String name, String lastname, String age, String login, String password) {
+        this.roleSet = roleSet;
+        this.name = name;
+        this.lastname = lastname;
+        this.age = age;
+        this.login = login;
+        this.password = password;
+    }
+
+    public User(long id, Set<com.anton.sring.spring_boot.models.Role> roleSet, String name, String lastname, String age, String login, String password) {
+        this.id = id;
+        this.roleSet = roleSet;
+        this.name = name;
+        this.lastname = lastname;
+        this.age = age;
+        this.login = login;
+        this.password = password;
+    }
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
+    public User(long id) {
+        this.id = id;
+    }
 
     public User() {
+
     }
 
-    public User(Long id, String name, String username, String password, String email, Set<Role> roles) {
-        this.id = id;
-        this.name = name;
-        this.username = username;
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public Set<com.anton.sring.spring_boot.models.Role> getRoleSet() {
+        return roleSet;
+    }
+
+    public void setRoleSet(Set<com.anton.sring.spring_boot.models.Role> roleSet) {
+        this.roleSet = roleSet;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
-        this.email = email;
-        this.roles = roles;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -60,54 +112,17 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", roles=" + roles +
-                '}';
-    }
-
-    /*@Override
-        public String toString() {
-            return "User{" +
-                    "id=" + id +
-                    ", name='" + name + '\'' +
-                    '}';
-        }
-
-         */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return null;
     }
 
     @Override
@@ -117,7 +132,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return this.password;
     }
 
     @Override
@@ -138,5 +153,19 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", roleSet=" + roleSet +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", age='" + age + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
