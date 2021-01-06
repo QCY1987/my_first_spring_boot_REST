@@ -23,8 +23,7 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
-public class UserController {
-@Qualifier("userDetailsService")
+public class UserController { @Qualifier("userDetailsService")
     @Autowired
     private UserService userService;
     private Role role;
