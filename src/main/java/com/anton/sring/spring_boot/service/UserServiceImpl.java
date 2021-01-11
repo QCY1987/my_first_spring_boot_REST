@@ -47,7 +47,7 @@ public class UserServiceImpl implements com.anton.sring.spring_boot.service.User
     }
 
     @Override
-    public void deleteById(User user) {
+    public void deleteById(Long user) {
         userRepository.deleteById(user.getId());
     }
 
@@ -62,7 +62,7 @@ public class UserServiceImpl implements com.anton.sring.spring_boot.service.User
     }
 
     @Override
-    public User findbyid(User user) {
+    public User findbyid(Long user) {
         Optional<User> tmp = userRepository.findById(user.getId());
         return tmp.get();
     }
