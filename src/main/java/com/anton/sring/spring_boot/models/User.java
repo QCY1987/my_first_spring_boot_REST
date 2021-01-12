@@ -25,7 +25,7 @@ public class User implements UserDetails {
     private String name;
 
     @Column(name = "lastname", nullable = false)
-    private String lastname;
+    private String lastName;
 
     @Column(name = "age")
     private String age;
@@ -39,7 +39,7 @@ public class User implements UserDetails {
     public User(Set<com.anton.sring.spring_boot.models.Role> roleSet, String name, String lastname, String age, String login, String password) {
         this.roleSet = roleSet;
         this.name = name;
-        this.lastname = lastname;
+        this.lastName = lastname;
         this.age = age;
         this.login = login;
         this.password = password;
@@ -49,7 +49,7 @@ public class User implements UserDetails {
         this.id = id;
         this.roleSet = roleSet;
         this.name = name;
-        this.lastname = lastname;
+        this.lastName = lastname;
         this.age = age;
         this.login = login;
         this.password = password;
@@ -113,11 +113,11 @@ public class User implements UserDetails {
     }
 
     public String getLastname() {
-        return lastname;
+        return lastName;
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastName = lastname;
     }
 
     @Override
@@ -162,7 +162,7 @@ public class User implements UserDetails {
                 "id=" + id +
                 ", roleSet=" + roleSet +
                 ", name='" + name + '\'' +
-                ", lastname='" + lastname + '\'' +
+                ", lastname='" + lastName + '\'' +
                 ", age='" + age + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +

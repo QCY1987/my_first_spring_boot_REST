@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping ()
+@RequestMapping()
 public class UserController {
+
     @GetMapping(value = "/")
     public String admin() {
         return "admin";
-
     }
+
     @GetMapping(value = "/user")
     public String user() {
         return "user";

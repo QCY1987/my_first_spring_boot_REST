@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Component
 @Service("userDetailsService")
 @Transactional
-public class UserServiceImpl implements com.anton.sring.spring_boot.service.UserService, UserDetailsService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
@@ -47,8 +47,8 @@ public class UserServiceImpl implements com.anton.sring.spring_boot.service.User
     }
 
     @Override
-    public void deleteById(Long user) {
-        userRepository.deleteById(user.getId());
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
     @Override
@@ -62,14 +62,14 @@ public class UserServiceImpl implements com.anton.sring.spring_boot.service.User
     }
 
     @Override
-    public User findbyid(Long user) {
-        Optional<User> tmp = userRepository.findById(user.getId());
+    public User findbyid(Long id) {
+        Optional<User> tmp = userRepository.findById(id);
         return tmp.get();
     }
 
     @Override
     public List<Role> findRolesById(User user) {
-        user = findbyid(user);
+        user = findbyid(user.getId());
         return user.getRoleSet().stream().collect(Collectors.toList());
     }
 

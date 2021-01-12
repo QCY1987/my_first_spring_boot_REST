@@ -15,7 +15,7 @@ public interface UserService {
 
     void update(User user);
 
-    User findbyid(Long user);
+    User findbyid(Long id);
 
     List<Role> findRolesById(User user);
 
